@@ -1,5 +1,5 @@
 
-#include "SuperHero.cpp"
+#include "class/SuperHero/SuperHero.hpp"
 #pragma once 
 
 class SpiderMan :public SuperHero

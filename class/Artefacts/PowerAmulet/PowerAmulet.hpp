@@ -1,4 +1,4 @@
-#include "Artefacts.hpp"
+#include "class/Artefacts/Artefacts.hpp"
 
 class PowerAmulet : public Artefacts
 {

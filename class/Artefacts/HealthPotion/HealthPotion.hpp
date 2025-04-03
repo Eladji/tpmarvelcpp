@@ -1,4 +1,4 @@
-#include "Artefacts.cpp"
+#include "class/Artefacts/Artefacts.cpp"
 #pragma once
 
 class HealthPotion : public Artefacts

@@ -22,6 +22,7 @@ Game::~Game()
 {
     for (auto player : player_list)
     {
+        SuperHero* hero;
         for (auto hero : player->getTeam())
         {
             player->removeHero(hero);
@@ -204,7 +205,7 @@ void Game::action(Player *player)
     case 1:
     {
 
-        player->getCurrentHero()->attack(selectTarget(player));
+        player->getCurrentHero()->attack(*(selectTarget(player)));
         break;
     }
 
@@ -212,7 +213,7 @@ void Game::action(Player *player)
     {
         cout << "Choose your artefact:" << endl;
         Artefacts *artselec = selectArtefact(player);
-        artselec->use(selectTarget());
+        artselec->use(*(selectTarget()));
         break;
     }
     case 3:
@@ -226,9 +227,10 @@ void Game::action(Player *player)
         cout << "Invalid choice!" << endl;
         break;
     }
+    cout << player->getName() <<" action done!" << endl;
 }
 
-SuperHero &Game::selectTarget(Player *player = nullptr)
+SuperHero* Game::selectTarget(Player *player = nullptr)
 {
     cout << "Choose your target:" << endl;
     Player *targetPlayer = getPlayer();
@@ -240,7 +242,7 @@ SuperHero &Game::selectTarget(Player *player = nullptr)
             break;
         }
     }
-    return *selectHero(targetPlayer);
+    return selectHero(targetPlayer);
 }
 
 bool Game::checkGameOver(Player *player)

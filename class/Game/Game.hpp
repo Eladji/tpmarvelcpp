@@ -20,7 +20,6 @@ public:
     void setTurn(int turn);
     int getTurn();
     void createteam(Player* player);
-    void createPlayer();
     void action(Player* player);
     bool checkGameOver(Player* player);
     Artefacts* selectArtefact(Player* player);
@@ -31,5 +30,5 @@ public:
     void addPlayer(Player* player);
     void removePlayer(Player* player);
     void displayPlayerList();
-    SuperHero &Game::selectTarget(Player *player = nullptr);
+    SuperHero* selectTarget(Player *player = nullptr);
 };

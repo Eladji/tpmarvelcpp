@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "SuperHero.cpp"
+#include "class/SuperHero/SuperHero.cpp"
 #pragma once 
 using namespace std;
 

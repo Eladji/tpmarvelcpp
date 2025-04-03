@@ -1,4 +1,4 @@
-#include "SuperHero.hpp"
+#include "class/SuperHero/SuperHero.hpp"
 #include <vector>
 #pragma once
 class DocteurStrange : public SuperHero

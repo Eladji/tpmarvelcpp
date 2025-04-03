@@ -1,10 +1,10 @@
-#include "SuperHero/Spider/SpiderMan.cpp"
-#include "SuperHero/Hulk/Hulk.cpp"
-#include "SuperHero/IronMan/IronMan.cpp"
-#include "SuperHero/Docteur Strange/DocteurStrange.cpp"
-#include "Artefacts/CursedStone/CursedStone.cpp"
-#include "Artefacts/HealthPotion/HealthPotion.cpp"
-#include "Artefacts/PowerAmulet/PowerAmulet.cpp"
+#include "class/SuperHero/Spider/SpiderMan.cpp"
+#include "class/SuperHero/Hulk/Hulk.cpp"
+#include "class/SuperHero/IronMan/IronMan.cpp"
+#include "class/SuperHero/Docteur Strange/DocteurStrange.cpp"
+#include "class/Artefacts/CursedStone/CursedStone.cpp"
+#include "class/Artefacts/HealthPotion/HealthPotion.cpp"
+#include "class/Artefacts/PowerAmulet/PowerAmulet.cpp"
 #include <algorithm>
 class Player
 {
@@ -33,7 +33,7 @@ public:
     SuperHero* getHero(int index);
     string getName() const;
     void setName(string name);
-    bool isTeamAlive() {};
+    bool isTeamAlive();
     Artefacts* getArtefact(int index);
 
 };
