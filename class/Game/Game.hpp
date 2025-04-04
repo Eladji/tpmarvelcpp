@@ -21,7 +21,7 @@ public:
     int getTurn();
     void createteam(Player* player);
     void action(Player* player);
-    bool checkGameOver(Player* player);
+    void checkGameOver();
     Artefacts* selectArtefact(Player* player);
     SuperHero* selectHero(Player* player);
     void getPlayerList();
@@ -31,5 +31,5 @@ public:
     void removePlayer(Player* player);
     void displayPlayerList();
     SuperHero* selectTarget(Player *player = nullptr);
-    SuperHero* selectHero(Player* player = nullptr);
+    void clearTerminal();
 };

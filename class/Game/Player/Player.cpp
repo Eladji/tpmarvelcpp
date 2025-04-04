@@ -53,8 +53,10 @@ vector<Artefacts*> Player::getInventory() {
 void Player::displayTeam() {
     cout << "Team: " << endl;
     for (size_t i = 0; i < team.size(); i++) {
-        cout << i << ": " << team[i]->getName() << endl;
+        cout << i << ": " << team[i]->getName() << " | HP: " << team[i]->getHealthPoints() << " | Attack: " <<team[i]->getBaseAttack()<< "  ";
     }
+    cout << endl;
+    cout << "Current Hero: " << (currentHero ? currentHero->getName() : "None") << endl;
 }
 void Player::displayInventory() {
     cout << "Inventory: " << endl;
@@ -84,10 +86,14 @@ void Player::setName(string name) {
 
 bool Player::isTeamAlive() {
     bool isAlive = true;
+    int count = 0;
     for (auto* hero : team) {
         if (!hero->isAlive()) {
-            isAlive = false;
+            count++;
             break;
+        }
+        if(count == static_cast<int>(team.size())) {
+            isAlive = false;
         }
     }
     return isAlive;
