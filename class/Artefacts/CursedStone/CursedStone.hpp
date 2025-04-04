@@ -7,5 +7,5 @@ private:
 public:
     CursedStone(/* args */);
     void display() const;
-    void use(SuperHero& target);
+    void use(SuperHero* target);
 };

@@ -7,16 +7,11 @@ CXXFLAGS = -std=c++11 -Wall -Wextra -I.
 # Target executable
 TARGET = marvelgame
 
-# Source directories
-SRC_DIRS = . class class/Artefacts class/Artefacts/CursedStone class/Artefacts/HealthPotion \
-           class/Artefacts/PowerAmulet class/SuperHero class/SuperHero/Hulk class/SuperHero/IronMan \
-           class/SuperHero/Spider class/SuperHero/Docteur\ Strange class/Game class/Game/Player
-
-# Find all source files
-SRCS = main.cpp
+# Find all source files directly without specifying directories
+SRCS := $(shell find . -name "*.cpp")
 
 # Object files
-OBJS = $(SRCS:.cpp=.o)
+OBJS := $(SRCS:.cpp=.o)
 
 # Main target
 all: $(TARGET)

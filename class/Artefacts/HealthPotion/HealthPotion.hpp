@@ -1,4 +1,4 @@
-#include "class/Artefacts/Artefacts.cpp"
+#include "class/Artefacts/Artefacts.hpp"
 #pragma once
 
 class HealthPotion : public Artefacts
@@ -8,5 +8,5 @@ private:
 public:
     HealthPotion();
     void display() const;
-    void use(SuperHero& target);
+    void use(SuperHero* target);
 };

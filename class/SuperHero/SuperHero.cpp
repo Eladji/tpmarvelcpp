@@ -11,7 +11,10 @@ SuperHero::SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, i
     this->energy = 0;
     this->criticalHit = criticalHit;
 }
-
+SuperHero::~SuperHero()
+{
+    cout << "SuperHero " << name << " destroyed!" << endl;
+}
 bool SuperHero::isAlive()
 {
     return healthPoints > 0;
@@ -25,6 +28,16 @@ void SuperHero::takeDamage(int damage)
         healthPoints = 0;
     }
 }
+
+void SuperHero::display() const {
+    cout << "Name: " << name << endl;
+    cout << "Health: " << healthPoints << "/" << maxHealthPoints << endl;
+    cout << "Attack: " << baseAttack << endl;
+    cout << "Energy: " << energy << "/" << maxEnergy << endl;
+    cout << "Critical Hit Chance: " << criticalHit << endl;
+    cout << "Special Attack: " << (specialAvailable ? "Available" : "Not Available") << endl;
+}
+
 void SuperHero::heal(int healAmount)
 {
     healthPoints += healAmount;

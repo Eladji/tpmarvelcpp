@@ -8,7 +8,6 @@ void IronMan::attack(SuperHero& target)
     cout << "IronMan attaque " << target.getName() << endl;
     srand(time(0));
     double val = (double)rand() / RAND_MAX;
-    int random;
     if (val < 0.05)    {   //  5%
         cout << "IronMan missed the attack" << endl;
     }

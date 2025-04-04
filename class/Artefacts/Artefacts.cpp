@@ -12,9 +12,9 @@ void Artefacts::display() const
 {
     cout << "Artefact: " << name << ", Value: " << value << endl;
 }
-void Artefacts::use(SuperHero &target)
+void Artefacts::use(SuperHero *target)
 {
-    cout << "Using artefact on " << target.getName() << endl;
+    cout << "Using artefact on " << target->getName() << endl;
 }
 void Artefacts::setName(string name)
 {

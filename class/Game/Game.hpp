@@ -1,4 +1,4 @@
-#include "Player/Player.cpp"
+#include "Player/Player.hpp"
 class Game
 {
 private:
@@ -16,7 +16,7 @@ public:
     void displayTurn();
     void displayWinner(Player* player);
     void createPlayer();
-    Player* getPlayer(int index= NULL );
+    Player* getPlayer(int index= 0 );
     void setTurn(int turn);
     int getTurn();
     void createteam(Player* player);
@@ -31,4 +31,5 @@ public:
     void removePlayer(Player* player);
     void displayPlayerList();
     SuperHero* selectTarget(Player *player = nullptr);
+    SuperHero* selectHero(Player* player = nullptr);
 };

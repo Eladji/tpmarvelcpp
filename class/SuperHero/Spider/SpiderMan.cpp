@@ -5,15 +5,11 @@ SpiderMan::SpiderMan(/* args */):SuperHero("SpiderMan", 100, 15, 100, 100, 20)
 {
 }
 
-
-
-
 void SpiderMan::attack(SuperHero& target)
 {
     cout << "SpiderMan attacks " << target.getName() << " with a basic attack" << endl;
     srand(time(0));
     double val = (double)rand() / RAND_MAX;
-    int random;
     if (val < 0.05)    {   //  5%
         cout << "SpiderMan missed the attack" << endl;
     }

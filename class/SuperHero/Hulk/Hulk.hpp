@@ -7,7 +7,6 @@ private:
     int ragetime;
 public:
     Hulk(/* args */);
-    ~Hulk();
     void attack(SuperHero& target);
     void specialAttack(SuperHero& target);
     void display() const;

@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "class/SuperHero/SuperHero.cpp"
+#include "class/SuperHero/SuperHero.hpp"
 #pragma once 
 using namespace std;
 
@@ -13,7 +13,7 @@ public:
     Artefacts(string name, int value);
     virtual ~Artefacts();
     virtual void display() const = 0;
-    virtual void use(SuperHero& target) = 0;
+    virtual void use(SuperHero* target) = 0;
     void setName(string name);
     string getName() const;
     void setValue(int value);

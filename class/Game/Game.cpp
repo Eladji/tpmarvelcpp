@@ -22,11 +22,11 @@ Game::~Game()
 {
     for (auto player : player_list)
     {
-        SuperHero* hero;
-        for (auto hero : player->getTeam())
+        
+        for (int i = 0; i < static_cast<int>((player->getTeam().size())); i++)
         {
-            player->removeHero(hero);
-            delete &hero;
+            player->removeHero(player->getHero(i));
+            
         }
         delete player;
     }
@@ -73,40 +73,36 @@ void Game::createteam(Player *player)
     {
 
         cin >> choice;
+        cout << choice << endl;
         switch (choice)
         {
         case 1:
         {
-            Hulk *hulk = new Hulk();
-            player->addHero(*hulk);
-            delete hulk;
+            
+            player->addHero(new Hulk());
             break;
         }
         case 2:
         {
-            SpiderMan *spiderMan = new SpiderMan();
-            player->addHero(*spiderMan);
-            delete spiderMan;
+            player->addHero(new SpiderMan());
             break;
         }
         case 3:
         {
-            IronMan *ironMan = new IronMan();
-            player->addHero(*ironMan);
-            delete ironMan;
+            player->addHero(new IronMan());
             break;
         }
         case 4:
         {
-            DocteurStrange *docteurStrange = new DocteurStrange();
-            player->addHero(*docteurStrange);
-            delete docteurStrange;
+            player->addHero(new DocteurStrange());
             break;
         }
         default:
             cout << "Invalid choice!" << endl;
-            break;
+            i--;
+            continue;
         }
+        cout << "Hero " << player->getHero(i)->getName() << " created!" << endl;
     }
     cout << "Team created!" << endl;
     player->displayTeam();
@@ -121,29 +117,27 @@ void Game::createteam(Player *player)
         {
         case 1:
         {
-            CursedStone *cursedStone = new CursedStone();
-            player->addArtefact(*cursedStone);
-            delete cursedStone;
+            player->addArtefact(new CursedStone());
             break;
         }
         case 2:
         {
-            HealthPotion *healthPotion = new HealthPotion();
-            player->addArtefact(*healthPotion);
-            delete healthPotion;
+            player->addArtefact(new HealthPotion());
             break;
         }
         case 3:
         {
-            PowerAmulet *powerAmulet = new PowerAmulet();
-            player->addArtefact(*powerAmulet);
-            delete powerAmulet;
+            player->addArtefact(new PowerAmulet());
             break;
         }
         default:
-            cout << "Invalid choice!" << endl;
-            break;
+        {
+        cout << "Invalid choice!" << endl;
+        i--;
+        continue;
         }
+    }
+    cout << "Artefact " << player->getArtefact(i)->getName() << " created!" << endl;
     }
     cout << "Artefacts added!" << endl;
     player->displayInventory();
@@ -194,46 +188,112 @@ int Game::getTurn()
 
 void Game::action(Player *player)
 {
-    cout << "Choose your action:" << endl;
-    cout << "1. Attack" << endl;
-    cout << "2. Use Artefact" << endl;
-    cout << "3. Switch Hero" << endl;
-    int choice;
-    cin >> choice;
-    switch (choice)
-    {
-    case 1:
-    {
-
-        player->getCurrentHero()->attack(*(selectTarget(player)));
-        break;
+    int choice = 0;
+    bool validInput = false;
+    
+    while (!validInput) {
+        cout << "Choose your action:" << endl;
+        cout << "1. Attack" << endl;
+        cout << "2. Use Artefact" << endl;
+        cout << "3. Switch Hero" << endl;
+        
+        // Clear input buffer and ensure we get a valid input
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+        cin >> choice;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number." << endl;
+            continue;
+        }
+        
+        cout << "You have chosen: " << choice << endl;
+        
+        switch (choice)
+        {
+        case 1:
+            if (player->getCurrentHero() == nullptr) {
+                player->setCurrentHero(player->getHero(0));
+            }
+            if (player->getCurrentHero() != nullptr) {
+                SuperHero* target = selectTarget(player);
+                if (target != nullptr) {
+                    player->getCurrentHero()->attack(*target);
+                    validInput = true;
+                } else {
+                    cout << "No valid target available." << endl;
+                }
+            } else {
+                cout << "No heroes available." << endl;
+            }
+            break;
+            
+        case 2:
+            {
+                cout << "Choose your artefact:" << endl;
+                Artefacts* art = selectArtefact(player);
+                cout << "do you want to use on your hero or on the enemy?" << endl;
+                cout << "1. Use on your hero" << endl;
+                cout << "2. Use on the enemy" << endl;
+                int artefactChoice;
+                cin >> artefactChoice;
+                if (artefactChoice == 1) {
+                    SuperHero* hero = selectTarget(player);
+                    if (hero != nullptr) {
+                        art->use(hero);
+                        validInput = true;
+                    } else {
+                        cout << "No heroes available." << endl;
+                    }
+                } else if (artefactChoice == 2) {
+                    SuperHero* target = selectTarget(player);
+                    if (target != nullptr) {
+                        art->use(target);
+                        validInput = true;
+                    } else {
+                        cout << "No valid target available." << endl;
+                    }
+                } else {
+                    cout << "Invalid choice!" << endl;
+                }
+                if (art != nullptr) {
+                    player->removeArtefact(art);
+                    cout << "Artefact " << art->getName() << " used!" << endl;
+                } else {
+                    cout << "No artefacts available." << endl;
+                }
+                break;
+            }
+            
+        case 3:
+            {
+                SuperHero* hero = player->getHero(0);
+                if (hero != nullptr) {
+                    player->setCurrentHero(hero);
+                    cout << "You have switched to " << player->getCurrentHero()->getName() << endl;
+                    validInput = true;
+                } else {
+                    cout << "No heroes available to switch to." << endl;
+                }
+            }
+            break;
+            
+        default:
+            cout << "Invalid choice! Please try again." << endl;
+            break;
+        }
     }
-
-    case 2:
-    {
-        cout << "Choose your artefact:" << endl;
-        Artefacts *artselec = selectArtefact(player);
-        artselec->use(*(selectTarget()));
-        break;
-    }
-    case 3:
-    {
-        player->setCurrentHero(player->getHero(0));
-        cout << "You have switched to " << player->getCurrentHero()->getName() << endl;
-        action(player);
-        break;
-    }
-    default:
-        cout << "Invalid choice!" << endl;
-        break;
-    }
-    cout << player->getName() <<" action done!" << endl;
+    
+    cout << player->getName() << " action done!" << endl;
 }
-
-SuperHero* Game::selectTarget(Player *player = nullptr)
+SuperHero* Game::selectTarget(Player *player)
 {
     cout << "Choose your target:" << endl;
-    Player *targetPlayer = getPlayer();
+    Player *targetPlayer = nullptr;
+    
+    // Find another player to target
     for (auto &p : player_list)
     {
         if (p != player)
@@ -242,18 +302,25 @@ SuperHero* Game::selectTarget(Player *player = nullptr)
             break;
         }
     }
+    
+    if (targetPlayer == nullptr) {
+        cout << "No other players available to target." << endl;
+        return nullptr;
+    }
+    
     return selectHero(targetPlayer);
 }
+
 
 bool Game::checkGameOver(Player *player)
 {
     if (player->isTeamAlive() == false)
     {
         cout << "Player " << player->getName() << " is out of the game!" << endl;
-        for (auto &hero : player->getTeam())
+        for (int i = 0; i < static_cast<int>((player->getTeam().size())); i++)
         {
-            player->removeHero(hero);
-            delete &hero;
+            cout << "Removing hero: " << player->getHero(i)->getName() << endl;
+            player->removeHero(player->getHero(i));
         }
         player->getTeam().clear();
         this->removePlayer(player);
@@ -272,11 +339,33 @@ Artefacts *Game::selectArtefact(Player *player)
 }
 SuperHero *Game::selectHero(Player *player)
 {
+    if (player == nullptr) {
+        cout << "Invalid player." << endl;
+        return nullptr;
+    }
+    
+    if (player->getTeam().empty()) {
+        cout << "Player has no heroes." << endl;
+        return nullptr;
+    }
+    
     cout << "Select a hero:" << endl;
     player->displayTeam();
     int choice;
     cin >> choice;
-    return player->getHero(choice);
+    
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input." << endl;
+        return nullptr;
+    }
+    
+    SuperHero* hero = player->getHero(choice);
+    if (hero == nullptr) {
+        cout << "Invalid hero selection." << endl;
+    }
+    return hero;
 }
 
 void Game::addPlayer(Player *player)
@@ -302,15 +391,15 @@ void Game::displayPlayerList()
     }
 }
 
-Player *Game::getPlayer(int index = NULL)
+Player* Game::getPlayer(int index)
 {
-    if (index == NULL)
+    if (index == 0)
     {
         displayPlayerList();
         cout << "Choose a player:" << endl;
         cin >> index;
     }
-    if (index >= 0 && index < player_list.size())
+    if (index >= 0 && index < static_cast<int>((player_list.size())))
     {
         return player_list[index];
     }
