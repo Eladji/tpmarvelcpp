@@ -1,5 +1,5 @@
 #include "DocteurStrange.hpp"
-DocteurStrange::DocteurStrange():SuperHero("Docteur Strange",100, 100, 5, 75, 15)
+DocteurStrange::DocteurStrange():SuperHero("Docteur Strange",100, 100, 5, 75, 15, true)
 {
     this->ultcharge = 3;
 }
@@ -30,18 +30,7 @@ void DocteurStrange::attack(SuperHero& target)
      target.takeDamage(this->CriticalHit());
     }
 }
-void DocteurStrange::specialAttack(SuperHero& target) {
-    if (this->isSpecialAvailable()) {
-        cout << "Doctor Strange casts a powerful spell on " << target.getName() << endl;
-        target.takeDamage(this->CriticalHit() * 1.5);
-        this->setUltcharge(this->getUltcharge() - 1);
-        if (this->getUltcharge() <= 0) {
-            this->setSpecialAvailable(false);
-        }
-    } else {
-        cout << "Special attack is not available" << endl;
-    }
-}
+
 
 int DocteurStrange::CriticalHit(){
     srand ( time(NULL) );	// seeds rand() with a number based on the current system time.

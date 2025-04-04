@@ -1,6 +1,6 @@
 #include "SuperHero.hpp"
 
-SuperHero::SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, int maxEnergy, int criticalHit)
+SuperHero::SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, int maxEnergy, int criticalHit, bool isAoe)
 {
     this->name = name;
     this->healthPoints = hp;
@@ -15,8 +15,7 @@ SuperHero::~SuperHero()
 {
     cout << "SuperHero " << name << " destroyed!" << endl;
 }
-bool SuperHero::isAlive()
-{
+bool SuperHero::isAlive() const {
     return healthPoints > 0;
 }
 
@@ -30,7 +29,11 @@ void SuperHero::takeDamage(int damage)
 }
 
 void SuperHero::display() const {
-    cout << "Name: " << name << endl;
+    if (!isAlive()) {
+        cout << "Name: \033[38;5;208m" << name << "\033[0m (DEFEATED)" << endl;
+    } else {
+        cout << "Name: " << name << endl;
+    }
     cout << "Health: " << healthPoints << "/" << maxHealthPoints << endl;
     cout << "Attack: " << baseAttack << endl;
     cout << "Energy: " << energy << "/" << maxEnergy << endl;
@@ -126,4 +129,22 @@ int SuperHero::getMaxHealthPoints()
 void SuperHero::setBaseAttack(int baseAttack)
 {
     this->baseAttack = baseAttack;
+}
+
+bool SuperHero::getisAoe() const
+{
+    return isAoe;
+}
+void SuperHero::setAoe(bool isAoe)
+{
+    this->isAoe = isAoe;
+}
+
+// In class/SuperHero/SuperHero.hpp
+void specialAttack(SuperHero &target) {
+    cout << "This hero does not have a single-target special attack." << endl;
+}
+
+void specialAttackAOE(vector<SuperHero*> target) {
+    cout << "This hero does not have an area effect special attack." << endl;
 }

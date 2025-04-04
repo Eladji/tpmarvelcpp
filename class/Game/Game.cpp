@@ -217,6 +217,14 @@ void Game::action(Player *player)
         cout << "1. Attack" << endl;
         cout << "2. Use Artefact" << endl;
         cout << "3. Switch Hero" << endl;
+        if (player->getCurrentHero() != nullptr && player->getCurrentHero()->isSpecialAvailable())
+        {
+            cout << "4. Use Special Attack" << endl;
+        }
+        else
+        {
+            cout << "4. Charge Energy" << endl;
+        }
 
         cin >> choice;
         if (cin.fail())
@@ -303,6 +311,7 @@ void Game::action(Player *player)
             {
                 cout << "No artefacts available." << endl;
             }
+            action(player);
             break;
         }
 
@@ -322,8 +331,45 @@ void Game::action(Player *player)
                 player->setCurrentHero(hero);
                 cout << "You have switched to " << player->getCurrentHero()->getName() << endl;
             }
+            break;
         }
-        break;
+        case 4:
+            if (player->getCurrentHero() != nullptr)
+            {
+                if (player->getCurrentHero()->isSpecialAvailable())
+                {
+                    if (player->getCurrentHero()->getisAoe())
+                    {
+                        player->getCurrentHero()->specialAttackAOE(player->getTeam()); // this is bad i should have done a getplayer function so any hero created later with aoe work out of the box but no :) my laptop as 13% battery
+                    }
+                    else
+                    {
+                        SuperHero *target = selectTarget(player);
+                        if (target != nullptr)
+                        {
+
+                            player->getCurrentHero()->specialAttack(*target);
+
+                            validInput = true;
+                        }
+                        else
+                        {
+                            cout << "No valid target available." << endl;
+                        }
+                    }
+                }
+                else
+                {
+                    selectHero(player)->setEnergy(player->getCurrentHero()->getEnergy() + 75);
+                    cout << "Energy charging!" << endl;
+                    validInput = true;
+                }
+            }
+            else
+            {
+                cout << "No heroes available." << endl;
+            }
+            break;
 
         default:
             cout << "Invalid choice! Please try again." << endl;
@@ -474,7 +520,7 @@ void Game::removePlayer(Player *player)
     {
         player_list.erase(it);
         cout << "Player " << player->getName() << " removed!" << endl;
-        //delete player;
+        // delete player;
     }
 }
 void Game::displayPlayerList()

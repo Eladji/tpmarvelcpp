@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
-#pragma once 
+#include <vector>
+#pragma once
 using namespace std;
 class SuperHero
 {
@@ -13,16 +14,18 @@ protected:
     int criticalHit;
     int energy;
     int maxEnergy;
+    bool isAoe;
+
 public:
-    SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, int maxEnergy, int criticalHit);
+    SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, int maxEnergy, int criticalHit, bool isAoe = false);
     virtual ~SuperHero();
-    virtual void display() const; 
-    virtual void attack(SuperHero& target)=0;
-    virtual void specialAttack(SuperHero& target) = 0;
+    virtual void display() const;
+    virtual void attack(SuperHero &target) = 0;
+    virtual void specialAttack(SuperHero &target);
     virtual int CriticalHit();
-    bool isAlive();
+    bool isAlive() const;
     void takeDamage(int damage);
-    void heal(int healAmount);   
+    void heal(int healAmount);
     string getName();
     int getHealthPoints();
     int getBaseAttack();
@@ -37,4 +40,7 @@ public:
     void setMaxHealthPoints(int maxHealthPoints);
     int getMaxHealthPoints();
     void setBaseAttack(int baseAttack);
+    bool getisAoe() const;
+    void setAoe(bool isAoe);
+    virtual void specialAttackAOE(vector<SuperHero*> target); 
 };
