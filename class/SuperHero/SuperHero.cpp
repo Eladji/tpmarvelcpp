@@ -10,6 +10,7 @@ SuperHero::SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, i
     this->maxEnergy = maxEnergy;
     this->energy = 0;
     this->criticalHit = criticalHit;
+    this->isAoe = isAoe;
 }
 SuperHero::~SuperHero()
 {
@@ -140,11 +141,11 @@ void SuperHero::setAoe(bool isAoe)
     this->isAoe = isAoe;
 }
 
-// In class/SuperHero/SuperHero.hpp
-void specialAttack(SuperHero &target) {
+// Add this to class/SuperHero/SuperHero.cpp
+void SuperHero::specialAttack(SuperHero &target) {
     cout << "This hero does not have a single-target special attack." << endl;
 }
 
-void specialAttackAOE(vector<SuperHero*> target) {
+void SuperHero::specialAttackAOE(vector<SuperHero*> target) {
     cout << "This hero does not have an area effect special attack." << endl;
 }

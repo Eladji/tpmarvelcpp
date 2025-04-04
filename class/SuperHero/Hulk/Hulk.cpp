@@ -1,6 +1,6 @@
 #include "Hulk.hpp"
 
-Hulk::Hulk(/* args */):SuperHero("Hulk",200, 200, 30, 100, 20)
+Hulk::Hulk(/* args */):SuperHero("Hulk",200, 200, 30, 100, 20,false)
 {
     this->cooldown = 0;
     this->ragetime = 0;

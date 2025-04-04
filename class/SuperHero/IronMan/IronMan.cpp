@@ -1,6 +1,6 @@
 #include "IronMan.hpp"
 
-IronMan::IronMan(/* args */):SuperHero("IronMan", 100, 20, 100, 100, 20)
+IronMan::IronMan(/* args */):SuperHero("IronMan", 100, 20, 100, 100, 20,false)
 {}
 
 void IronMan::attack(SuperHero& target)

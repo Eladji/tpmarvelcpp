@@ -1,7 +1,7 @@
 #include "SpiderMan.hpp"
 #include <math.h>
 
-SpiderMan::SpiderMan(/* args */):SuperHero("SpiderMan", 100, 15, 100, 100, 20)
+SpiderMan::SpiderMan(/* args */):SuperHero("SpiderMan", 100, 15, 100, 100, 20,false)
 {
 }
 
