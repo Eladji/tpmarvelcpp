@@ -18,6 +18,8 @@ void SpiderMan::attack(SuperHero& target)
         target.takeDamage(this->CriticalHit());
         this->setEnergy(this->getEnergy() + 10);
         cout << "SpiderMan a gagné 10 points d'énergie" << endl;
+        target.setStunTime(2);
+        cout << target.getName() << " est immobilisé pendant 2 tours" << endl;
     }
     else
     {
@@ -27,6 +29,9 @@ void SpiderMan::attack(SuperHero& target)
 
 void SpiderMan::specialAttack(SuperHero& target){
     if (this->isSpecialAvailable()){
+        target.setStunTime(2);
+        this->setSpecialAvailable(false);
+        this->setEnergy(0);
         cout << "Spider-Man utilise sa toile pour immobiliser " << target.getName() <<" !" << endl; 
     }
     else {

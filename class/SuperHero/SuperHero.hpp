@@ -15,6 +15,7 @@ protected:
     int energy;
     int maxEnergy;
     bool isAoe;
+    int stunTime;
 
 public:
     SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, int maxEnergy, int criticalHit, bool isAoe = false);
@@ -43,4 +44,9 @@ public:
     bool getisAoe() const;
     void setAoe(bool isAoe);
     virtual void specialAttackAOE(vector<SuperHero*> target); 
+    void setCD(int time);
+    int getCD() const;
+    bool isStunned() const;
+    void setStunTime(int time);
+    int getStunTime() const;
 };

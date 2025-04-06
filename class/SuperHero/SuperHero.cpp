@@ -11,6 +11,7 @@ SuperHero::SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, i
     this->energy = 0;
     this->criticalHit = criticalHit;
     this->isAoe = isAoe;
+
 }
 SuperHero::~SuperHero()
 {
@@ -159,6 +160,10 @@ void SuperHero::specialAttackAOE(vector<SuperHero*> target) {
 }
 
 void SuperHero::attack(SuperHero &target) {
+    if (this->isStunned()) {
+        cout << name << " est étourdi et ne peut pas attaquer!" << endl;
+        return;
+    }
     cout << name <<" attaque " << target.getName() << endl;
     srand(time(0));
     double val = (double)rand() / RAND_MAX;
@@ -174,4 +179,22 @@ void SuperHero::attack(SuperHero &target) {
     {
      target.takeDamage(this->CriticalHit());
 }
+}
+void SuperHero::setCD(int time){
+    this->stunTime = time;
+    if (this->stunTime < 0){
+        this->stunTime = 0;
+    }
+}
+int SuperHero::getCD() const{
+    return this->stunTime;
+}
+bool SuperHero::isStunned() const{
+    return this->stunTime > 0;
+}
+void SuperHero::setStunTime(int time){
+    this->stunTime = time;
+}
+int SuperHero::getStunTime() const{
+    return this->stunTime;
 }

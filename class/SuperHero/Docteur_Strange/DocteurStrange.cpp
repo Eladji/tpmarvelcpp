@@ -1,36 +1,60 @@
 #include "DocteurStrange.hpp"
-DocteurStrange::DocteurStrange():SuperHero("Docteur Strange",100, 100, 5, 75, 15, true)
+DocteurStrange::DocteurStrange() : SuperHero("Docteur Strange", 100, 100, 5, 75, 15, true)
 {
     this->ultcharge = 3;
 }
 
-void DocteurStrange::setUltcharge(int ultcharge){
+void DocteurStrange::setUltcharge(int ultcharge)
+{
     this->ultcharge = ultcharge;
 }
-int DocteurStrange::getUltcharge()const {
+int DocteurStrange::getUltcharge() const
+{
     return this->ultcharge;
 }
 
-
-
-int DocteurStrange::CriticalHit(){
-    srand ( time(NULL) );	// seeds rand() with a number based on the current system time.
-    if ( this->getCriticalHit() > rand() % 200 )
-        return rand() % 2 * this->getBaseAttack() + this->getBaseAttack() * 0.25 ;
+int DocteurStrange::CriticalHit()
+{
+    srand(time(NULL)); // seeds rand() with a number based on the current system time.
+    if (this->getCriticalHit() > rand() % 200)
+        return rand() % 2 * this->getBaseAttack() + this->getBaseAttack() * 0.25;
     else
-        return rand() % 2 * this->getBaseAttack() ;
+        return rand() % 2 * this->getBaseAttack();
 }
-void DocteurStrange::specialAttackAOE(vector<SuperHero*> target){
-    if (this->isSpecialAvailable()){
-        cout << "Doctor Strange ouvre un portail de soin magique." <<  endl;
-        for (int i = 0; i < static_cast<int>((target.size())); i++){
-            if (target[i]->isAlive()){
-                target[i]->heal(rand()% 15 + 15);
-                cout << target[i]->getName() << " est soigné de 20 points de vie." << endl;
-            }
-        } 
+void DocteurStrange::specialAttackAOE(vector<SuperHero *> target)
+{
+    if (this->isStunned())
+    {
+        cout << "Docteur Strange est étourdi et ne peut pas attaquer!" << endl;
+        return;
     }
-    else {
+    if (getUltcharge() <= 0)
+    {
+        cout << "L'attaque spécial n'est plus disponible." << endl;
+        return;
+    }
+    if (this->isSpecialAvailable())
+    {
+        cout << "Doctor Strange ouvre un portail de soin magique." << endl;
+        for (int i = 0; i < static_cast<int>((target.size())); i++)
+        {
+            if (target[i]->isAlive())
+            {
+                target[i]->heal(rand() % 15 + 15);
+                cout << target[i]->getName() << " est soigné de 20 points de vie." << endl;
+                setUltcharge(ultcharge - 1);
+                if (ultcharge <= 0)
+                {
+                    cout << "L'attaque spécial n'est plus disponible." << endl;
+                    
+                }
+                this->setSpecialAvailable(false);
+                this->setEnergy(0);
+            }
+        }
+    }
+    else
+    {
         cout << "l'attaque spécial n'est pas disponible" << endl;
     }
 }

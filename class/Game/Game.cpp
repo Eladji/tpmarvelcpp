@@ -175,6 +175,17 @@ void Game::nextTurn()
             break;
         }
         action(player);
+        for (auto hero : player->getTeam())
+        {
+            hero->setCD(hero->getCD() - 1);
+
+            if (player->getCurrentHero()->isStunned())
+            {
+                cout << player->getCurrentHero()->getName() << " est étourdi et ne peut pas agir!" << endl;
+              
+            }
+        }
+        
     }
 
     setTurn(getTurn() + 1);
@@ -344,7 +355,7 @@ void Game::action(Player *player)
                 {
                     if (player->getCurrentHero()->getisAoe())
                     {
-                        player->getCurrentHero()->specialAttackAOE(player->getTeam()); // this is bad i should have done a getplayer function to select team target so any hero created later with aoe work out of the box but no :) my laptop as 13% battery
+                        player->getCurrentHero()->specialAttackAOE(getPlayer()->getTeam()); // this is bad i should have done a getplayer function to select team target so any hero created later with aoe work out of the box but no :) my laptop as 13% battery update i did it
                     }
                     else
                     {

@@ -9,6 +9,10 @@ Hulk::Hulk(/* args */):SuperHero("Hulk",200, 200, 300, 100, 20,false)
 
 void Hulk::attack(SuperHero& target)
 {
+    if (this->isStunned()){
+        cout << "Hulk est étourdi et ne peut pas attaquer!" << endl;
+        return;
+    }
     if (this->getCooldown() > 0){
         cout << "Hulk est en cooldown" << endl;
         this->setCooldown(this->getCooldown() - 1);
@@ -61,9 +65,9 @@ void Hulk::recoil(){
 
 void Hulk::specialAttack(SuperHero& target){
     if (this->isSpecialAvailable()){
-        cout << "Hulk utilise son attaque spéciale sur " << target.getName() << endl;
-        target.takeDamage(this->CriticalHit() * 2);
-        this->setCooldown(3);
+        this->setRagetime(2);
+        this->setSpecialAvailable(false);
+        this->setEnergy(0);
     }
     else {
         cout << "l'attaque spécial n'est pas disponible" << endl;
@@ -71,6 +75,22 @@ void Hulk::specialAttack(SuperHero& target){
 }
 
 void Hulk::display() const {
+    SuperHero::display();
+    cout << "Hulk est enragé : " << (this->getRagetime() > 0 ? "Oui" : "Non") << endl;
     cout << "Cooldown : " << this->getCooldown() << endl;
     cout << "Ragetime : " << this->getRagetime() << endl;
-}   
+}
+void Hulk::setCD(int time){
+    SuperHero::setCD(time);
+    this->cooldown = time;
+    if (this->cooldown < 0){
+        this->cooldown = 0;
+    }
+    this->ragetime = time;
+    if (this->ragetime < 0){
+        this->ragetime = 0;
+    }
+}
+int Hulk::getCD() const{
+    return this->cooldown;
+}

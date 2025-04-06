@@ -16,4 +16,6 @@ public:
     int getCooldown() const;
     void setRagetime(int time);
     int getRagetime() const;
+    int getCD() const;
+    void setCD(int time);
 };
