@@ -48,7 +48,7 @@ void Game::createPlayer()
 {
     for (int i = 0; i < this->nb_players; i++)
     {
-        cout << "Joueur " << i + 1 << " Entre vôtre nom: ";
+        cout << "Joueur " << i  + 1 << " Entre vôtre nom: ";
         string name;
         cin >> name;
         Player *player = new Player(name);
@@ -147,7 +147,7 @@ void Game::createteam(Player *player)
         }
         default:
         {
-            cout << "Invalid choice!" << endl;
+            cout << "choix invalide!" << endl;
             i--;
             continue;
         }
@@ -257,22 +257,22 @@ void Game::action(Player *player)
                 }
                 else
                 {
-                    cout << "No valid target available." << endl;
+                    cout << "Pas de cible valide." << endl;
                 }
             }
             else
             {
-                cout << "No heroes available." << endl;
+                cout << "Pas de hero disponible." << endl;
             }
             break;
 
         case 2:
         {
-            cout << "Choose your artefact:" << endl;
+            cout << "Choisissez vôtre artefact:" << endl;
             Artefacts *art = selectArtefact(player);
-            cout << "do you want to use on your hero or on the enemy?" << endl;
-            cout << "1. Use on your hero" << endl;
-            cout << "2. Use on the enemy" << endl;
+            cout << "voulez vous l'utiliser sur un de vos hero ou celui d'un adversaire ?" << endl;
+            cout << "1. Utiliser sur vôtre hero" << endl;
+            cout << "2. Use Utiliser sur un hero adverse" << endl;
             int artefactChoice;
             cin >> artefactChoice;
             if (artefactChoice == 1)
@@ -285,7 +285,7 @@ void Game::action(Player *player)
                 }
                 else
                 {
-                    cout << "No heroes available." << endl;
+                    cout << "Pas de hero disponible." << endl;
                 }
             }
             else if (artefactChoice == 2)
@@ -298,21 +298,21 @@ void Game::action(Player *player)
                 }
                 else
                 {
-                    cout << "No valid target available." << endl;
+                    cout << "Pas de cible Disponible." << endl;
                 }
             }
             else
             {
-                cout << "Invalid choice!" << endl;
+                cout << "Choix invalide!" << endl;
             }
             if (art != nullptr)
             {
                 player->removeArtefact(art);
-                cout << "Artefact " << art->getName() << " used!" << endl;
+                cout << "Artefact " << art->getName() << " Utiliser!" << endl;
             }
             else
             {
-                cout << "No artefacts available." << endl;
+                cout << "Pas artefacts disponible." << endl;
             }
             action(player);
             break;
@@ -323,16 +323,16 @@ void Game::action(Player *player)
             SuperHero *hero = selectHero(player);
             if (hero == player->getCurrentHero())
             {
-                cout << "You are already using this hero!" << endl;
+                cout << "Vous utilise déja se hero!" << endl;
             }
             else if (hero == nullptr)
             {
-                cout << "No heroes available." << endl;
+                cout << "Pas de hero disponible." << endl;
             }
             else
             {
                 player->setCurrentHero(hero);
-                cout << "You have switched to " << player->getCurrentHero()->getName() << endl;
+                cout << "Vous avez changer pour " << player->getCurrentHero()->getName() << endl;
             }
             break;
         }
@@ -368,30 +368,30 @@ void Game::action(Player *player)
                 {
                     SuperHero *selectedHero = selectHero(player);
                     selectedHero->setEnergy(selectedHero->getEnergy() + 75);
-                    cout << "Energy charging!" << endl;
+                    cout << "L'energie de " << selectedHero->getName() << " ce charge"<<" !" << endl;
                     validInput = true;
                 }
             }
             else
             {
-                cout << "No heroes available." << endl;
+                cout << "Pas de hero de disponible." << endl;
             }
             break;
         }
         case 5:
         {
-            cout << "Tour skipped!" << endl;
+            cout << "Tour passer!" << endl;
             validInput = true;
             break;
         }
         default:
-            cout << "Invalid choice! Please try again." << endl;
+            cout << "choix invalide." << endl;
             break;
         }
     }
 
-    cout << player->getName() << "'s action completed!" << endl;
-    cout << "Press Enter to continue..." << endl;
+    cout << player->getName() << "'s action finit !" << endl;
+    cout << "Presser Entre pour continue..." << endl;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get(); // Wait for Enter key
 }
@@ -413,7 +413,7 @@ SuperHero *Game::selectTarget(Player *player)
     }
     else if (nb_players > 3)
     {
-        cout << "Choose a target player:" << endl;
+        cout << "Choisissez un joeur a cibler:" << endl;
         for (int i = 0; i < nb_players; i++)
         {
             if (player_list[i] != player)
@@ -429,18 +429,18 @@ SuperHero *Game::selectTarget(Player *player)
         }
         else
         {
-            cout << "Invalid choice!" << endl;
+            cout << "Choix invalide!" << endl;
             return nullptr;
         }
     }
     else if (nb_players == 1)
     {
-        cout << "No other players available to target." << endl;
+        cout << "il n'y a pas de joeur à ciblé." << endl;
         return nullptr;
     }
     if (targetPlayer == nullptr)
     {
-        cout << "No other players available to target." << endl;
+        cout << "il n'y a pas de joeur à ciblé." << endl;
         return nullptr;
     }
 
@@ -455,7 +455,7 @@ void Game::checkGameOver()
     {
         if (!player->isTeamAlive())
         {
-            cout << "Player " << player->getName() << " is out of the game!" << endl;
+            cout << "Joueur " << player->getName() << " est hors jeux!" << endl;
             playersToRemove.push_back(player);
         }
     }
@@ -482,7 +482,7 @@ void Game::checkGameOver()
 Artefacts *Game::selectArtefact(Player *player)
 {
     player->displayInventory();
-    cout << "Select an artefact:" << endl;
+    cout << "Choisissez un  artefact:" << endl;
     int choice;
     cin >> choice;
     return player->getArtefact(choice);
@@ -491,17 +491,17 @@ SuperHero *Game::selectHero(Player *player)
 {
     if (player == nullptr)
     {
-        cout << "Invalid player." << endl;
+        cout << "Joueur invalide." << endl;
         return nullptr;
     }
 
     if (player->getTeam().empty())
     {
-        cout << "Player has no heroes." << endl;
+        cout << "Le joueur n'as pas de hero." << endl;
         return nullptr;
     }
 
-    cout << "Select a hero:" << endl;
+    cout << "Choisissez un hero:" << endl;
     player->displayTeam();
     int choice;
     cin >> choice;
@@ -510,14 +510,14 @@ SuperHero *Game::selectHero(Player *player)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Invalid input." << endl;
+        cout << "Entré invalide." << endl;
         return nullptr;
     }
 
     SuperHero *hero = player->getHero(choice);
     if (hero == nullptr)
     {
-        cout << "Invalid hero selection." << endl;
+        cout << "Hero selectionner invalide." << endl;
     }
     return hero;
 }
@@ -532,13 +532,13 @@ void Game::removePlayer(Player *player)
     if (it != player_list.end())
     {
         player_list.erase(it);
-        cout << "Player " << player->getName() << " removed!" << endl;
+        cout << "Joueur " << player->getName() << " retirer!" << endl;
         // delete player;
     }
 }
 void Game::displayPlayerList()
 {
-    cout << "Player list:" << endl;
+    cout << "Liste de Joueurs:" << endl;
     for (auto player : player_list)
     {
         cout << player->getName() << endl;
@@ -550,7 +550,7 @@ Player *Game::getPlayer(int index)
     if (index == 0)
     {
         displayPlayerList();
-        cout << "Choose a player:" << endl;
+        cout << "Choisissez un joueur:" << endl;
         cin >> index;
     }
     if (index >= 0 && index < static_cast<int>((player_list.size())))
@@ -569,7 +569,7 @@ int Game::getNbPlayers()
 }
 void Game::getPlayerList()
 {
-    cout << "Player list:" << endl;
+    cout << "Liste de Joueurs:" << endl;
     for (auto player : player_list)
     {
         cout << player->getName() << endl;

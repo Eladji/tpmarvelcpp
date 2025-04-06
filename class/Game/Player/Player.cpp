@@ -55,7 +55,7 @@ vector<Artefacts*> Player::getInventory() {
 void Player::displayTeam() {
     cout << "Equipe: " << endl;
     for (size_t i = 0; i < team.size(); i++) {
-        cout << i << ": " << team[i]->getName() << " | HP: " << team[i]->getHealthPoints() << " | Attack: " <<team[i]->getBaseAttack()<< "  ";
+        cout << i << ": " << team[i]->getName() << " | HP: " << team[i]->getHealthPoints() << " | Attaque: " <<team[i]->getBaseAttack()<< "  ";
     }
     cout << endl;
     cout << "Current Hero: " << (currentHero ? currentHero->getName() : "None") << endl;
