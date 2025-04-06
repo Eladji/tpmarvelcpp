@@ -3,27 +3,26 @@
 IronMan::IronMan(/* args */):SuperHero("IronMan", 100, 20, 100, 100, 20,false)
 {}
 
-void IronMan::attack(SuperHero& target)
-{
-    cout << "IronMan attaque " << target.getName() << endl;
-    srand(time(0));
-    double val = (double)rand() / RAND_MAX;
-    if (val < 0.05)    {   //  5%
-        cout << "IronMan missed the attack" << endl;
-    }
-    else if (val < 0.30)   {   //  30%
-        cout << "IronMan immobilise " << target.getName() << endl;
-        target.takeDamage(this->CriticalHit());
-    }
-    else
-    {
-     target.takeDamage(this->CriticalHit());
-    }
-}
+
 
 void IronMan::specialAttack(SuperHero& target){
     if (this->isSpecialAvailable()){
-        cout << "ron Man déclenche une salve de missiles sur " << target.getName() <<" !" << endl; 
+        cout << "Iron Man déclenche une salve de missiles sur " << target.getName() <<" !" << endl; 
+    }
+    else {
+        cout << "l'attaque spécial n'est pas disponible" << endl;
+    }
+}
+
+void IronMan::specialAttackAOE(vector<SuperHero*> target){
+    if (this->isSpecialAvailable()){
+        cout << "Iron Man déclenche une salve de missiles sur l'équipe adverse." <<  endl;
+        for (int i = 0; i < static_cast<int>((target.size())); i++){
+            if (target[i]->isAlive()){
+                target[i]->takeDamage(15);
+                cout << target[i]->getName() << " est soigné de 20 points de vie." << endl;
+            }
+        } 
     }
     else {
         cout << "l'attaque spécial n'est pas disponible" << endl;

@@ -7,7 +7,6 @@ private:
     int ultcharge;
 public:
     DocteurStrange();
-    void attack(SuperHero& target);
     int CriticalHit();
     void specialAttackAOE(vector<SuperHero*> target); 
     void setUltcharge(int ultcharge);

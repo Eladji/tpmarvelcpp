@@ -27,7 +27,7 @@ This game allows players to build teams of superheroes from the Marvel universe 
 ### Building the Game
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/marvelgame.git
+git clone https://github.com/Eladji/marvelgame.git
 cd marvelgame
 
 # Build the game
@@ -73,7 +73,7 @@ This project demonstrates object-oriented programming concepts in C++:
 
 ## Authors
 
-- ELadji
+- Eladji
 - Contributors Myself
 
 ## License

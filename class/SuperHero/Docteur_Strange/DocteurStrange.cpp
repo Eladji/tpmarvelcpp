@@ -12,25 +12,6 @@ int DocteurStrange::getUltcharge()const {
 }
 
 
-void DocteurStrange::attack(SuperHero& target)
-{
-    cout << "Docteur Strange attaque " << target.getName() << endl;
-    srand(time(0));
-    double val = (double)rand() / RAND_MAX;
-    if (val < 0.05)    {   //  5%
-        cout << "Docteur Strange missed the attack" << endl;
-    }
-    else if (val < 0.30)   {   //  30%
-        cout << "Docteur Strange charge son énergie " << target.getName() << endl;
-        this->setEnergy(this->getEnergy() + 10);
-        target.takeDamage(this->CriticalHit());
-    }
-    else
-    {
-     target.takeDamage(this->CriticalHit());
-    }
-}
-
 
 int DocteurStrange::CriticalHit(){
     srand ( time(NULL) );	// seeds rand() with a number based on the current system time.
@@ -41,7 +22,7 @@ int DocteurStrange::CriticalHit(){
 }
 void DocteurStrange::specialAttackAOE(vector<SuperHero*> target){
     if (this->isSpecialAvailable()){
-        cout << "octor Strange ouvre un portail de soin magique." <<  endl;
+        cout << "Doctor Strange ouvre un portail de soin magique." <<  endl;
         for (int i = 0; i < static_cast<int>((target.size())); i++){
             if (target[i]->isAlive()){
                 target[i]->heal(rand()% 15 + 15);

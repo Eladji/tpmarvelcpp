@@ -19,7 +19,7 @@ void Hulk::attack(SuperHero& target)
     srand(time(0));
     double val = (double)rand() / RAND_MAX;
     if (val < 0.05)    {   //  5%
-        cout << "Hulk missed the attack" << endl;
+        cout << "Hulk à louper son attaque" << endl;
         this->recoil();
 
     }

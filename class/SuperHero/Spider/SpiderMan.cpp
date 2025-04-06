@@ -1,21 +1,23 @@
 #include "SpiderMan.hpp"
 #include <math.h>
 
-SpiderMan::SpiderMan(/* args */):SuperHero("SpiderMan", 100, 15, 100, 100, 20,false)
+SpiderMan::SpiderMan(/* args */):SuperHero("SpiderMan", 100, 100, 100, 100, 20,false)
 {
 }
 
 void SpiderMan::attack(SuperHero& target)
 {
-    cout << "SpiderMan attacks " << target.getName() << " with a basic attack" << endl;
+    cout << "SpiderMan attaque " << target.getName() << " avec une attaque basique" << endl;
     srand(time(0));
     double val = (double)rand() / RAND_MAX;
     if (val < 0.05)    {   //  5%
-        cout << "SpiderMan missed the attack" << endl;
+        cout << "SpiderMan a louper son attaque" << endl;
     }
     else if (val < 0.30)   {   //  30%
         cout << "SpiderMan Spider-Man a immobiliser "<< target.getName() << endl;
         target.takeDamage(this->CriticalHit());
+        this->setEnergy(this->getEnergy() + 10);
+        cout << "SpiderMan a gagné 10 points d'énergie" << endl;
     }
     else
     {

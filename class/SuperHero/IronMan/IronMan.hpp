@@ -6,7 +6,7 @@ private:
     /* data */
 public:
     IronMan(/* args */);
-    void attack(SuperHero& target);
     void specialAttack(SuperHero& target);
+    void specialAttackAOE(vector<SuperHero*> target);
 };
 

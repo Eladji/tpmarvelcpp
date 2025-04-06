@@ -20,7 +20,7 @@ public:
     SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, int maxEnergy, int criticalHit, bool isAoe = false);
     virtual ~SuperHero();
     virtual void display() const;
-    virtual void attack(SuperHero &target) = 0;
+    virtual void attack(SuperHero &target);
     virtual void specialAttack(SuperHero &target);
     virtual int CriticalHit();
     bool isAlive() const;

@@ -14,7 +14,7 @@ SuperHero::SuperHero(string name, int hp, int maxHealthPoints, int baseAttack, i
 }
 SuperHero::~SuperHero()
 {
-    cout << "SuperHero " << name << " destroyed!" << endl;
+    cout << "SuperHero " << name << " détruit!" << endl;
 }
 bool SuperHero::isAlive() const {
     return healthPoints > 0;
@@ -26,6 +26,14 @@ void SuperHero::takeDamage(int damage)
     if (healthPoints < 0)
     {
         healthPoints = 0;
+    }
+    if (healthPoints == 0)
+    {
+        cout << name << " est battue!" << endl;
+    }
+    else
+    {
+        cout << name << " prend " << damage << " dégat!" << endl;
     }
 }
 
@@ -39,7 +47,7 @@ void SuperHero::display() const {
     cout << "Attack: " << baseAttack << endl;
     cout << "Energy: " << energy << "/" << maxEnergy << endl;
     cout << "Critical Hit Chance: " << criticalHit << endl;
-    cout << "Special Attack: " << (specialAvailable ? "Available" : "Not Available") << endl;
+    cout << "Special Attack: " << (specialAvailable ? "Disponible" : "Non Disponible") << endl;
 }
 
 void SuperHero::heal(int healAmount)
@@ -143,9 +151,27 @@ void SuperHero::setAoe(bool isAoe)
 
 // Add this to class/SuperHero/SuperHero.cpp
 void SuperHero::specialAttack(SuperHero &target) {
-    cout << "This hero does not have a single-target special attack." << endl;
+    cout << "Ce hero n'a pas d'attaque a cible unique." << endl;
 }
 
 void SuperHero::specialAttackAOE(vector<SuperHero*> target) {
-    cout << "This hero does not have an area effect special attack." << endl;
+    cout << "Ce hero n'a pas d'attaque a cible multiple." << endl;
+}
+
+void SuperHero::attack(SuperHero &target) {
+    cout << name <<" attaque " << target.getName() << endl;
+    srand(time(0));
+    double val = (double)rand() / RAND_MAX;
+    if (val < 0.05)    {   //  5%
+        cout << name <<" a louper son attaque" << endl;
+    }
+    else if (val < 0.30)   {   //  30%
+        cout << name <<" charge son énergie " << target.getName() << endl;
+        this->setEnergy(this->getEnergy() + 10);
+        target.takeDamage(this->CriticalHit());
+    }
+    else
+    {
+     target.takeDamage(this->CriticalHit());
+}
 }
