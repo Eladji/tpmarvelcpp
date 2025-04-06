@@ -167,11 +167,14 @@ void Game::endGame()
 void Game::nextTurn()
 {
 
-    checkGameOver();
-
     // Each player takes one action
     for (auto player : player_list)
     {
+        checkGameOver();
+        if (game_over)
+        {
+            break;
+        }
         action(player);
     }
 
@@ -225,6 +228,7 @@ void Game::action(Player *player)
         {
             cout << "4. Charge Energy" << endl;
         }
+        cout << "5. Skip Turn" << endl;
 
         cin >> choice;
         if (cin.fail())
@@ -334,13 +338,14 @@ void Game::action(Player *player)
             break;
         }
         case 4:
+        {
             if (player->getCurrentHero() != nullptr)
             {
                 if (player->getCurrentHero()->isSpecialAvailable())
                 {
                     if (player->getCurrentHero()->getisAoe())
                     {
-                        player->getCurrentHero()->specialAttackAOE(player->getTeam()); // this is bad i should have done a getplayer function so any hero created later with aoe work out of the box but no :) my laptop as 13% battery
+                        player->getCurrentHero()->specialAttackAOE(player->getTeam()); // this is bad i should have done a getplayer function to select team target so any hero created later with aoe work out of the box but no :) my laptop as 13% battery
                     }
                     else
                     {
@@ -351,6 +356,8 @@ void Game::action(Player *player)
                             player->getCurrentHero()->specialAttack(*target);
 
                             validInput = true;
+                            cout << "Special attack used!" << endl;
+                            target = nullptr;
                         }
                         else
                         {
@@ -360,7 +367,8 @@ void Game::action(Player *player)
                 }
                 else
                 {
-                    selectHero(player)->setEnergy(player->getCurrentHero()->getEnergy() + 75);
+                    SuperHero *selectedHero = selectHero(player);
+                    selectedHero->setEnergy(selectedHero->getEnergy() + 75);
                     cout << "Energy charging!" << endl;
                     validInput = true;
                 }
@@ -370,7 +378,13 @@ void Game::action(Player *player)
                 cout << "No heroes available." << endl;
             }
             break;
-
+        }
+        case 5:
+        {
+            cout << "Turn skipped!" << endl;
+            validInput = true;
+            break;
+        }
         default:
             cout << "Invalid choice! Please try again." << endl;
             break;

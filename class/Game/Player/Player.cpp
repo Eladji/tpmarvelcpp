@@ -90,7 +90,6 @@ bool Player::isTeamAlive() {
     for (auto* hero : team) {
         if (!hero->isAlive()) {
             count++;
-            break;
         }
         if(count == static_cast<int>(team.size())) {
             isAlive = false;
