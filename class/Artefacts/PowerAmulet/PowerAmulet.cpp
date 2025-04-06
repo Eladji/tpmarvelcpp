@@ -10,7 +10,7 @@ void PowerAmulet::display() const
 }
 void PowerAmulet::use(SuperHero* target)
 {
-    cout << "Power Amulet used on " << target->getName() << endl;
+    cout << "Power Amulet utiliser sur" << target->getName() << endl;
     target->setBaseAttack(target->getBaseAttack() + this->getValue());
     cout << "l'attaque de base de "<< target->getName() << "a était augmenter de "<< this->getValue() << endl;
 }

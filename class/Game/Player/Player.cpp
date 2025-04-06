@@ -20,6 +20,8 @@ void Player::removeHero(SuperHero* hero) {
     auto it = find(team.begin(), team.end(), hero);
     if (it != team.end()) {
         team.erase(it);
+        currentHero = team.empty() ? nullptr : team[0]; // Set current hero to the first one in the list if available
+        delete hero; // Free the memory of the removed hero
     }
 }
 void Player::addArtefact(Artefacts* artefact) {
@@ -51,7 +53,7 @@ vector<Artefacts*> Player::getInventory() {
     return inventory;
 }
 void Player::displayTeam() {
-    cout << "Team: " << endl;
+    cout << "Equipe: " << endl;
     for (size_t i = 0; i < team.size(); i++) {
         cout << i << ": " << team[i]->getName() << " | HP: " << team[i]->getHealthPoints() << " | Attack: " <<team[i]->getBaseAttack()<< "  ";
     }
@@ -59,7 +61,7 @@ void Player::displayTeam() {
     cout << "Current Hero: " << (currentHero ? currentHero->getName() : "None") << endl;
 }
 void Player::displayInventory() {
-    cout << "Inventory: " << endl;
+    cout << "Inventaire: " << endl;
     for (size_t i = 0; i < inventory.size(); i++) {
         cout << i << ": " << inventory[i]->getName() << endl;
     }
@@ -71,7 +73,7 @@ SuperHero* Player::getHero(int index) {
     
     // To proper bounds checking:
     if (index < 0 || index >= static_cast<int>(team.size())) {
-        cout << "Index out of range" << endl;
+        cout << "Index hors de porté" << endl;
         return nullptr;
     }
     return team[index];
@@ -87,8 +89,13 @@ void Player::setName(string name) {
 bool Player::isTeamAlive() {
     bool isAlive = true;
     int count = 0;
+    if (team.empty()) {
+        cout << "L'équipe du joueur " << name<< "a était battue"  << endl;
+        return false;
+    }
     for (auto* hero : team) {
-        if (!hero->isAlive()) {
+        if (!hero->isAlive() ) {
+            this->removeHero(hero);
             count++;
         }
         if(count == static_cast<int>(team.size())) {

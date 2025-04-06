@@ -6,12 +6,12 @@ Game::Game()
 {
     this->turn = 0;
 
-    cout << "Enter the number of players: ";
+    cout << "Entre le nombres de joueur: ";
     cin >> this->nb_players;
     this->game_over = false;
-    cout << "Game created!" << endl;
-    cout << "Welcome to the game!" << endl;
-    cout << "The game will start in :" << endl;
+    cout << "Partie créé!" << endl;
+    cout << "Nombre de joueurs: " << this->nb_players << endl;
+    cout << "La partie commenceras dans :" << endl;
     for (int i = 3; i > 0; i--)
     {
         cout << i << endl;
@@ -31,15 +31,14 @@ Game::~Game()
         delete player;
     }
     player_list.clear();
-    cout << "Game destroyed!" << endl;
+    cout << "Partie détruite!" << endl;
 }
 
 void Game::startGame()
 {
-    cout << "Game started!" << endl;
+    cout << "Partie lancer!" << endl;
     createPlayer();
     setTurn(1);
-    cout << "Turn: " << turn << endl;
     while (!game_over)
     {
         nextTurn();
@@ -49,21 +48,20 @@ void Game::createPlayer()
 {
     for (int i = 0; i < this->nb_players; i++)
     {
-        cout << "Player " << i + 1 << " Enter your name: ";
+        cout << "Joueur " << i + 1 << " Entre vôtre nom: ";
         string name;
         cin >> name;
         Player *player = new Player(name);
-        cout << "Player " << player->getName() << " created!" << endl;
         createteam(player);
         player_list.push_back(player);
         if (player_list[i]->getTeam().empty())
         {
-            cout << "something went wrong :(" << endl;
+            cout << "nah gros comment t'as fait :(" << endl;
             delete player;
             i--;
             continue;
         }
-        cout << "Player " << player->getName() << " created!" << endl;
+        cout << "Joeur " << player->getName() << " créé!" << endl;
     }
 }
 void Game::clearTerminal()
@@ -73,19 +71,19 @@ void Game::clearTerminal()
 #else
     system("clear"); // Unix/Linux/Mac
 #endif
-    cout << "Terminal cleared!" << endl;
+    cout << "Terminal nettoyer!" << endl;
 }
 
 void Game::createteam(Player *player)
 {
-    cout << "Choose your team:" << endl;
-    cout << "1. Hulk" << endl;
-    cout << "2. Spider Man" << endl;
-    cout << "3. Iron Man" << endl;
-    cout << "4. Doctor Strange" << endl;
+    cout << "Choisissez vôtre équipe:" << endl;
     int choice;
     for (int i = 0; i < 4; i++)
     {
+        cout << "1. Hulk" << endl;
+        cout << "2. Spider Man" << endl;
+        cout << "3. Iron Man" << endl;
+        cout << "4. Doctor Strange" << endl;
 
         cin >> choice;
         cout << choice << endl;
@@ -113,21 +111,22 @@ void Game::createteam(Player *player)
             break;
         }
         default:
-            cout << "Invalid choice!" << endl;
+            cout << "choix invalide!" << endl;
             i--;
             continue;
         }
-        cout << "Hero " << player->getHero(i)->getName() << " created!" << endl;
+        cout << "Hero " << player->getHero(i)->getName() << " créé!" << endl;
     }
     player->setCurrentHero(player->getHero(0));
-    cout << "Team created!" << endl;
+    cout << "equipe créé!" << endl;
     player->displayTeam();
-    cout << "Choose your artefacts:" << endl;
-    cout << "1. Cursed Stone" << endl;
-    cout << "2. Health Potion" << endl;
-    cout << "3. Power Amulet" << endl;
+    cout << "choisissez vôtre artefacts:" << endl;
+
     for (int i = 0; i < 3; i++)
     {
+        cout << "1. Cursed Stone" << endl;
+        cout << "2. Health Potion" << endl;
+        cout << "3. Power Amulet" << endl;
         cin >> choice;
         switch (choice)
         {
@@ -153,20 +152,20 @@ void Game::createteam(Player *player)
             continue;
         }
         }
-        cout << "Artefact " << player->getArtefact(i)->getName() << " created!" << endl;
+        cout << "Artefact " << player->getArtefact(i)->getName() << " créé!" << endl;
     }
-    cout << "Artefacts added!" << endl;
+    cout << "Inventaire completé!" << endl;
     player->displayInventory();
 }
 
 void Game::endGame()
 {
-    cout << "Game ended!" << endl;
+    cout << "Partie finit!" << endl;
 }
 
 void Game::nextTurn()
 {
-
+    displayTurn();
     // Each player takes one action
     for (auto player : player_list)
     {
@@ -180,20 +179,20 @@ void Game::nextTurn()
 
     setTurn(getTurn() + 1);
 
-    // Clear terminal at end of complete turn
+    // Clear terminal at end of complete tour
     clearTerminal();
 }
 void Game::displayTurn()
 {
-    cout << "Turn: " << turn << endl;
+    cout << "Tour: " << turn << endl;
 }
 void Game::displayWinner(Player *player)
 {
-    cout << "Player " << player->getName() << " wins!" << endl;
+    cout << "Joueur " << player->getName() << " a gagner!" << endl;
 }
-void Game::setTurn(int turn)
+void Game::setTurn(int tour)
 {
-    this->turn = turn;
+    this->turn = tour;
 }
 int Game::getTurn()
 {
@@ -207,8 +206,8 @@ void Game::action(Player *player)
 
     while (!validInput)
     {
-        cout << "Player " << player->getName() << "'s turn!" << endl;
-        cout << "Current Hero: " << (player->getCurrentHero() ? player->getCurrentHero()->getName() : "None") << endl;
+        cout << "Tour de  " << player->getName() << "!" << endl;
+        cout << " Hero actuel: " << (player->getCurrentHero() ? player->getCurrentHero()->getName() : "None") << endl;
 
         // Show current hero stats
         if (player->getCurrentHero())
@@ -216,30 +215,30 @@ void Game::action(Player *player)
             player->getCurrentHero()->display();
         }
 
-        cout << "Choose your action:" << endl;
-        cout << "1. Attack" << endl;
-        cout << "2. Use Artefact" << endl;
-        cout << "3. Switch Hero" << endl;
+        cout << "Choisissez vôtre action:" << endl;
+        cout << "1. Attaque" << endl;
+        cout << "2. Utiliser un Artefact" << endl;
+        cout << "3. changer de hero" << endl;
         if (player->getCurrentHero() != nullptr && player->getCurrentHero()->isSpecialAvailable())
         {
-            cout << "4. Use Special Attack" << endl;
+            cout << "4. Utiliser une attaque spécial" << endl;
         }
         else
         {
-            cout << "4. Charge Energy" << endl;
+            cout << "4. charger l'énergie" << endl;
         }
-        cout << "5. Skip Turn" << endl;
+        cout << "5. passer son tour" << endl;
 
         cin >> choice;
         if (cin.fail())
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter a number." << endl;
+            cout << "Entré invalide. entré un chiffre." << endl;
             continue;
         }
 
-        cout << "You have chosen: " << choice << endl;
+        cout << "Vous avez choisit: " << choice << endl;
 
         switch (choice)
         {
@@ -381,7 +380,7 @@ void Game::action(Player *player)
         }
         case 5:
         {
-            cout << "Turn skipped!" << endl;
+            cout << "Tour skipped!" << endl;
             validInput = true;
             break;
         }
@@ -450,7 +449,7 @@ SuperHero *Game::selectTarget(Player *player)
 
 void Game::checkGameOver()
 {
-    // Check if any player has lost before starting new turn
+    // Check if any player has lost before starting new tour
     vector<Player *> playersToRemove;
     for (auto player : player_list)
     {

@@ -53,6 +53,7 @@ make run
    - Attack an opponent
    - Use an artifact
    - Switch heroes
+6. And no you don't get to revive your hero 
 
 ## Class Structure
 
@@ -78,4 +79,4 @@ This project demonstrates object-oriented programming concepts in C++:
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under nothing this is a school assigment.
